@@ -1,16 +1,13 @@
 import {useState} from "react";
 import logo from './logo.svg';
-
 import './App.css';
-
- 
 function App() {
   const [newGoal, setNewGoal] = useState("");
   console.log(newGoal)
   return (  
     <div className="App">
       <header className="App-header">
-        <Nav></Nav>
+        <Navbar></Navbar>
         <br></br>
         <br></br>
         <br></br>
