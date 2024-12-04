@@ -2,6 +2,74 @@ body {
   background-color: rgb(255, 255, 255);
 }
 
+.login-sign-up{
+  border: 5px solid red;
+}
+.background-image{
+  position: absolute;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+}
+
+.outer-login-div{
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  /* borders for div testing */
+  /* border: 5px rgb(106, 0, 255) solid; */
+}
+
+
+.username-password{
+  font-weight: 600;
+  font-size: larger;
+  color: rgb(250, 186, 186);
+  align-self: center;
+}
+
+.logins{
+  /* font-family: "Poppins"; */
+  align-self: center;
+  padding: 5px 10px;
+  margin: 8px 0;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.697);
+}
+
+.login-button{
+  margin: 35px;
+  align-self: center;
+}
+
+.inner-login-div{
+  display: flex;
+  flex-direction: column;
+  /* flex-start; prevents stretching and alligns along the cross axis */
+  align-items: flex-start;
+  border: 2.5px rgb(47, 47, 47) solid;
+  border-radius: 8px;
+  background-color: rgba(37, 37, 37, 0.285);
+  font-family: "Poppins", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.login-heading{
+  color: rgb(8, 8, 8);
+  text-align: center;
+  font-size: xx-large;
+  margin: 50px;
+  margin-bottom: -30px;
+  font-family: "Poppins", serif;
+  font-weight: 700;
+  font-style: normal;
+  text-decoration: none;
+}
+
 .main-heading{
   font-size: large;
   font-family: "Poppins", serif;
@@ -28,3 +96,5 @@ body {
   font-weight: 700;
   font-style: normal;
 }
+
+
