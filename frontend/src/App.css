@@ -5,6 +5,7 @@ body {
 .login-sign-up{
   border: 5px solid red;
 }
+
 .background-image{
   position: absolute;
   z-index: -1;
@@ -13,6 +14,7 @@ body {
 }
 
 .outer-login-div{
+
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -36,13 +38,29 @@ body {
   align-self: center;
   padding: 5px 10px;
   margin: 8px 0;
+  border-color: rgba(0, 3, 39, 0.272);
   border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.697);
+  background-color: rgb(227, 227, 227);
 }
 
+
 .login-button{
+  color: rgb(0, 0, 0);
+  width: 200px;
+  height: 30px;
+  font-weight: 500;
+  font-size: small;
+  border-radius: 5px;
+  /* border-color: navy;
+  background-color: navy; */
+  font-family: "Poppins";
   margin: 35px;
   align-self: center;
+}
+
+.login-button:hover{
+  border-color: white;
+  cursor: pointer;
 }
 
 .inner-login-div{
@@ -50,9 +68,9 @@ body {
   flex-direction: column;
   /* flex-start; prevents stretching and alligns along the cross axis */
   align-items: flex-start;
-  border: 2.5px rgb(47, 47, 47) solid;
+  border: 4.5px rgb(47, 47, 47) solid;
   border-radius: 8px;
-  background-color: rgba(37, 37, 37, 0.285);
+  background-color: rgba(37, 37, 37, 0.379);
   font-family: "Poppins", serif;
   font-weight: 700;
   font-style: normal;
