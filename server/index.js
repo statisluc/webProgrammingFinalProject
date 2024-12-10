@@ -10,11 +10,10 @@ const pool = new Pool({
     user : 'e',
     host : 'localhost',
     database : 'todolist',
-    password : '630487',
+    password : '630487', 
     port : 5432,
 });
-
-
+    
 pool
 	.connect()
 	.then(() => {

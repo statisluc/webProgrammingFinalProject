@@ -2,6 +2,7 @@ import React from 'react';
 import {motion} from "framer-motion";
 import { IoMdPerson } from "react-icons/io";import {useState} from "react";
 import { IoIosKey } from "react-icons/io";
+import { MdEmail } from "react-icons/md";
 import logo from './logo.svg';
 import './App.css';
 import Home from "./components/Home";
@@ -22,12 +23,26 @@ const TextAnimation = () => {
   > CollegeTracker <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Eight-Thirty.png" alt="Eight-Thirty" width="60" height="60" /></motion.h2>
 }
 
+const TextAnimationSignUp = () => {
+  return <motion.h2
+  initial ={{y : 25 , opacity :0}}
+  animate ={{y : 0 , opacity :1}}
+  transition={{duration : 1, ease : "easeInOut"}}  
+  > Sign Up for CollegeTracker <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Eight-Thirty.png" alt="Eight-Thirty" width="60" height="60" /></motion.h2>
+}
+
 function App() {
   return (  
-        <Login></Login>
-      
+        <div>
+          <SignUp></SignUp>
+          <Login></Login>  
+        </div>
+    
   )
 }
+
+
+
 
 function Success(){
   return(
@@ -44,9 +59,69 @@ function LoginInSignUp(){
 }
 
 function SignUp(){
-  // TODO : component to display when user is signing up for the first time
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [balance, setBalance] = useState('')
+  const [email, setEmail] = useState('')
+  const [loginState, setLoginState] = useState(false);
+  const [incorrectLogin, setIncorrectLogin] = useState(false);
+  
+  async function addUser(){
+    await fetch("http://localhost:3001/addTodo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ username, password, balance, email})
+    })
+    setEmail('')
+    setUsername('')
+    setPassword('')
+    setBalance('')
+  }
+
+  if (loginState)
+    return <Success></Success>
   return(
-    null
+    <div className="outer-login-div">
+      {/* <img className = "background-image" 
+      src='https://wagner.edu/communications/files/2020/03/MainHall4-1920.jpg'>
+      </img> */}
+      <div className="inner-login-div">
+        {/*     <LoginInSignUp></LoginInSignUp> */}
+        <h1 className="login-heading"> <TextAnimationSignUp></TextAnimationSignUp> </h1>
+        <h2 className='username-password'>Username <IoMdPerson /></h2>
+          <input 
+          className= 'logins'
+          type = "text"
+          value = {username}
+          onChange={(event) => setUsername(event.target.value)}
+          />
+        <h2 className='username-password'> Password <IoIosKey/></h2>
+        <input 
+          className='logins'
+          type = "text"
+          value = {password}
+          onChange={(event) => setPassword(event.target.value)}
+          />
+        <h2 className='username-password'> Email <MdEmail/></h2>
+        <input 
+          className='logins'
+          type = "text"
+          value = {email}
+          onChange={(event) => setEmail(event.target.value)}
+          />          
+        <h2 className='username-password'> Starting Deposit <MdEmail/></h2>
+        <input 
+          className='logins'
+          type = "text"
+          value = {balance}
+          onChange={(event) => setBalance(event.target.value)}
+          />                    
+        <button className='login-button' onClick={addUser}> Sign Up </button>
+      </div>
+      {/* <h1>dont have an account? sign up here</h1> */}
+    </div>
   )
 }
 
@@ -56,9 +131,8 @@ function Login(){
   const [loginState, setLoginState] = useState(false);
   const [incorrectLogin, setIncorrectLogin] = useState(false);
 
-
   const validateLogin = (username) => {
-    if(username == 'john'){
+    if(username == 'leticia'){
       setLoginState(true);
     }
     if(username != 'john'){
