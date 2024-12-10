@@ -61,18 +61,18 @@ function LoginInSignUp(){
 function SignUp(){
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [balance, setBalance] = useState('')
+  const [balance, setBalance] = useState('');
   const [email, setEmail] = useState('')
   const [loginState, setLoginState] = useState(false);
   const [incorrectLogin, setIncorrectLogin] = useState(false);
-  
+
   async function addUser(){
-    await fetch("http://localhost:3001/addTodo", {
+    await fetch("http://localhost:4000/addUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ username, password, balance, email})
+      body: JSON.stringify({ username, password, email, balance})
     })
     setEmail('')
     setUsername('')
