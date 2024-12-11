@@ -66,6 +66,8 @@ function SignUp(){
   const [loginState, setLoginState] = useState(false);
   const [incorrectLogin, setIncorrectLogin] = useState(false);
 
+  // This is interesting, trying to understand how to send such information. 
+  // https://stackoverflow.com/questions/43965316/for-login-get-or-post
   async function addUser(){
     await fetch("http://localhost:4000/addUser", {
       method: "POST",
@@ -126,11 +128,21 @@ function SignUp(){
 }
 
 function Login(){
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loginState, setLoginState] = useState(false);
   const [incorrectLogin, setIncorrectLogin] = useState(false);
 
+  async function validateUser(){
+    await fetch("http://localhost:4000/usersLogin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ username, password})
+    })
+  }
   const validateLogin = (username) => {
     if(username == 'leticia'){
       setLoginState(true);
@@ -165,7 +177,7 @@ function Login(){
           onChange={(event) => setPassword(event.target.value)}
           />
           {incorrectLogin ? <h3 className='logins'> incorrect login, please try again.</h3> : null}
-        <button className='login-button' onClick={(event) => validateLogin(username)}> Sign In </button>
+        <button className='login-button' onClick={validateUser}> Sign In </button>
       </div>
       {/* <h1>dont have an account? sign up here</h1> */}
     </div>
