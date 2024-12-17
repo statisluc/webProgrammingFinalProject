@@ -7,12 +7,7 @@ import { TbPigMoney } from "react-icons/tb";
 import logo from './logo.svg';
 import Vault from './components/full_vault';
 import './App.css';
-import Home from "./components/Home";
-import Goals from "./components/Goals";
-import Myaccount from "./components/Myaccount";
-import {Route,Routes} from "react-router-dom" ;
-import {Link} from "react-router-dom";
-import { color } from 'chart.js/helpers';
+
 
 // really cool animated emojis on this website
 // https://animated-fluent-emoji.vercel.app/
