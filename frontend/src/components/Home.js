@@ -47,7 +47,5 @@ function Addgoal(){
   );
 }
 
-
-
 export default Home;
 

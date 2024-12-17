@@ -1,10 +1,85 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const {Pool} = require('pg');
-
 const app = express();
+const port = process.env.PORT || 3000;
+const {Sequelize, DataTypes} = require("sequelize");
+const { ConstantColorFactor } = require("three");
 app.use(cors());
 app.use(express.json());
+
+const sequelize = new Sequelize(process.env.DB_URL, {
+    dialect: "postgres",
+    logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  });
+  
+  sequelize
+    .sync()
+    .then(() => {
+      console.log("Database connected");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+    const students = sequelize.define("studentsInfo", {
+      id : {
+        type : DataTypes.INTEGER,
+        autoIncrement : true,
+        allowNull : true,
+        primaryKey : true
+      },
+      name : {
+        type : DataTypes.STRING,
+        allowNull : true
+      },
+      password : {
+        type : DataTypes.STRING,
+        allowNull : true
+      },
+      email : {
+        type : DataTypes.STRING,
+        allowNull : true
+      },
+      balance : {
+        type : DataTypes.DECIMAL,
+        allowNull : true
+      }
+    });
+
+app.post("/addStudent", async(req, res) => {
+  try{
+    const {name, password, email, balance} = req.body
+    const id = 1
+    console.log(req.body)
+    const newStudent = await students.create({name, password, email,balance});
+    console.log("NEW STUDENT INSERTED")
+    res.json(newStudent) 
+  }catch (err){
+    console.log(err)
+  }
+});
+
+app.post("/verifyUser", async(req, res) => {
+  try{
+    const allUsers = await students.findAll();
+    res.json(allUsers)
+    console.log("returned all users");
+    
+  }
+  catch (err){
+    console.log(err)
+  }
+  
+});
+  
 
 const pool = new Pool({
     user : 'e',
@@ -37,16 +112,16 @@ pool
 // Route for adding users to the table for signUp.
 app.post("/addUser", async(req, res) => {
     const data = req.body
-    console.log("the body json ", req.body)
+    console.log("object sent when submitting : ", req.body)
     const floatingBalance = parseFloat(data.balance);
     await pool.query("INSERT INTO studentaccounts (username, password, email, balance) VALUES ($1, $2, $3, $4)", [data.username, data.password, data.email, floatingBalance])
     res.status(200).send()
   });
 
-// query database for login validation.
+// query database for login validation, returns 200 status if password mathces login.
 app.post("/usersLogin", async (req, res) => {
     const userData = req.body
-    console.log("*** username of login user :" , userData)
+    console.log("*****information of user when hitting login  :" , userData)
     pool.query("SELECT * FROM studentaccounts WHERE username = $1", [userData.username], (err, result) => {
         if (err) {
             console.error('Error executing query', err);
@@ -54,26 +129,19 @@ app.post("/usersLogin", async (req, res) => {
             console.log('Query result:', result.rows);
         }
     const retrievedUser = result.rows
-    console.log(retrievedUser[0].password)
-    // careful, something about adding the retrievedUser[0] caused this work, need to understand.
-    if(retrievedUser[0].password == userData.password){
-        console.log("LOGIN SUCCCESS")
-        res.status(200).send()
+    if(retrievedUser.length > 0){
+        if(retrievedUser[0].password == userData.password){
+            res.status(200).send()
+        }
+        else
+            res.status(400).send()
+        }
+    // case to catch an empty query meaning no username was found. 
+    else{
+        res.status(400).send()
     }
-    else
-        console.log("LOGIN FAILED")
-    
     }); 
-    // const { rows } = await pool.query("SELECT * FROM studentaccounts");
-    // console.log("****user 1 is this data: ", rows[0].password)
 
-    // // for of loop for iteration through each student record. 
-    // for(r of rows){
-    //     console.log(r.password)
-    // }
-
-    // const loginValidation = res.json(rows)
-    res.status(200).send()
   });
 
 app.get('/', (req, res) => {
@@ -87,5 +155,5 @@ app.get('/home', (req, res) => {
 
 
 
-app.listen(4000, () => console.log('Server is running on http://localhost:4000'))
+app.listen(4090, () => console.log(`Server is running on http://localhost:${port}`))
 
