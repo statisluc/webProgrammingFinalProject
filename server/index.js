@@ -69,13 +69,30 @@ app.post("/addStudent", async(req, res) => {
 
 app.post("/verifyUser", async(req, res) => {
   try{
-    const allUsers = await students.findAll();
-    res.json(allUsers)
-    console.log("returned all users");
+    const userInput = req.body
+    const allUsers = await students.findAll({
+      where : {name : "ed" }
+    });
     
+    console.log("**user sent username", userInput.username)
+    console.log("**user sent password", userInput.password)
+    console.log("***allusersname", JSON.stringify(allUsers[0].name))
+    console.log("***allusersnamePassword", JSON.stringify(allUsers[0].password))
+    console.log("***NONJSON", allUsers[0].name)
+
+    if(JSON.stringify(userInput.username) == JSON.stringify(allUsers[0].name) && 
+       JSON.stringify(userInput.password) == JSON.stringify(allUsers[0].password)){
+        console.log("correct login, sending 200")
+        res.status(200).send()
+    }
+    else{
+      console.log("inccorrect login, sending 404")
+      res.status(404).send()
+    }    
   }
   catch (err){
     console.log(err)
+    res.status(404).send()
   }
   
 });
@@ -119,30 +136,30 @@ app.post("/addUser", async(req, res) => {
   });
 
 // query database for login validation, returns 200 status if password mathces login.
-app.post("/usersLogin", async (req, res) => {
-    const userData = req.body
-    console.log("*****information of user when hitting login  :" , userData)
-    pool.query("SELECT * FROM studentaccounts WHERE username = $1", [userData.username], (err, result) => {
-        if (err) {
-            console.error('Error executing query', err);
-        } else {
-            console.log('Query result:', result.rows);
-        }
-    const retrievedUser = result.rows
-    if(retrievedUser.length > 0){
-        if(retrievedUser[0].password == userData.password){
-            res.status(200).send()
-        }
-        else
-            res.status(400).send()
-        }
-    // case to catch an empty query meaning no username was found. 
-    else{
-        res.status(400).send()
-    }
-    }); 
+// app.post("/usersLogin", async (req, res) => {
+//     const userData = req.body
+//     console.log("*****information of user when hitting login  :" , userData)
+//     pool.query("SELECT * FROM studentaccounts WHERE username = $1", [userData.username], (err, result) => {
+//         if (err) {
+//             console.error('Error executing query', err);
+//         } else {
+//             console.log('Query result:', result.rows);
+//         }
+//     const retrievedUser = result.rows
+//     if(retrievedUser.length > 0){
+//         if(retrievedUser[0].password == userData.password){
+//             res.status(200).send()
+//         }
+//         else
+//             res.status(400).send()
+//         }
+//     // case to catch an empty query meaning no username was found. 
+//     else{
+//         res.status(400).send()
+//     }
+//     }); 
 
-  });
+//   });
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

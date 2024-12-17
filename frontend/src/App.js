@@ -148,9 +148,9 @@ function Login(){
   const [password, setPassword] = useState('')
   const [loginState, setLoginState] = useState(false);
   const [incorrectLogin, setIncorrectLogin] = useState(false);
-  console.log(loginState)
+  const [signUpPage, setSignUpPage] = useState(false);
   async function validateUser(){
-    await fetch("http://localhost:4000/usersLogin", {
+    await fetch("http://localhost:4090/verifyUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -158,7 +158,7 @@ function Login(){
       body: JSON.stringify({ username, password})
     })
     .then((res) => {
-      // function handles response, setting loginState based on database query.
+      // function handles response, setting loginState based on query results.
       if(res.status == 200){
         setLoginState(true);
       }
@@ -167,11 +167,10 @@ function Login(){
       }
     })
   }
-    
+
+  // TODO: when login successful, return homepage div. 
   if (loginState)
     return <Success></Success>
-
-  
   return(
     <div className="split left">
       <TextAnimation></TextAnimation>
@@ -198,11 +197,9 @@ function Login(){
           onChange={(event) => setPassword(event.target.value)}
           />
           {incorrectLogin ? <h3 className='logins' style={{textAlign : 'center'}}> <Incorrect></Incorrect></h3> : null}
-          <p className='sign-up-link'>Don't have an account? <a href='https://www.youtube.com/'  className='sign-up-link'>Sign Up</a></p>
+          <p className='sign-up-link'>Don't have an account? <button className="sign-up-link">Sign Up</button></p>
         <button className='login-button' onClick={validateUser}> Sign In </button>
-        {/* </form> */}
       </div>
-      {/* <h1>dont have an account? sign up here</h1> */}
     </div>
   )
 }
