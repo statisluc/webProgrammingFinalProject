@@ -98,42 +98,42 @@ app.post("/verifyUser", async(req, res) => {
 });
   
 
-const pool = new Pool({
-    user : 'e',
-    host : 'localhost',
-    database : 'studentlogin',
-    password : '630487', 
-    port : 5432,
-});
+// const pool = new Pool({
+//     user : 'e',
+//     host : 'localhost',
+//     database : 'studentlogin',
+//     password : '630487', 
+//     port : 5432,
+// });
     
-pool
-	.connect()
-	.then(() => {
-		console.log('Connected to PostgreSQL database');
-	})
-	.catch((err) => {
-		console.error('Error connecting to PostgreSQL database', err);
-	});
+// pool
+// 	.connect()
+// 	.then(() => {
+// 		console.log('Connected to PostgreSQL database');
+// 	})
+// 	.catch((err) => {
+// 		console.error('Error connecting to PostgreSQL database', err);
+// 	});
 
 
-// Query to retrieve all rows from data
-// JUST FOR TESTING, UNCOMMENTING WILL FLOOD TERMINAL.
-// pool.query('SELECT * FROM studentaccounts', (err, result) => {
-//     if (err) {
-//         console.error('Error executing query', err);
-//     } else {
-//         console.log('Query result:', result.rows);
-//     }
-// });    
+// // Query to retrieve all rows from data
+// // JUST FOR TESTING, UNCOMMENTING WILL FLOOD TERMINAL.
+// // pool.query('SELECT * FROM studentaccounts', (err, result) => {
+// //     if (err) {
+// //         console.error('Error executing query', err);
+// //     } else {
+// //         console.log('Query result:', result.rows);
+// //     }
+// // });    
 
-// Route for adding users to the table for signUp.
-app.post("/addUser", async(req, res) => {
-    const data = req.body
-    console.log("object sent when submitting : ", req.body)
-    const floatingBalance = parseFloat(data.balance);
-    await pool.query("INSERT INTO studentaccounts (username, password, email, balance) VALUES ($1, $2, $3, $4)", [data.username, data.password, data.email, floatingBalance])
-    res.status(200).send()
-  });
+// // Route for adding users to the table for signUp.
+// app.post("/addUser", async(req, res) => {
+//     const data = req.body
+//     console.log("object sent when submitting : ", req.body)
+//     const floatingBalance = parseFloat(data.balance);
+//     await pool.query("INSERT INTO studentaccounts (username, password, email, balance) VALUES ($1, $2, $3, $4)", [data.username, data.password, data.email, floatingBalance])
+//     res.status(200).send()
+//   });
 
 // query database for login validation, returns 200 status if password mathces login.
 // app.post("/usersLogin", async (req, res) => {
@@ -161,14 +161,14 @@ app.post("/addUser", async(req, res) => {
 
 //   });
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// app.get('/', (req, res) => {
+//     res.send('Hello World!');
+// });
 
 
-app.get('/home', (req, res) => {    
-    res.send('Hello home!');
-});
+// app.get('/home', (req, res) => {    
+//     res.send('Hello home!');
+// });
 
 
 
