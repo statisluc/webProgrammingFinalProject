@@ -1,13 +1,22 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
+// const cors = require("cors");
 const {Pool} = require('pg');
 const app = express();
 const port = process.env.PORT || 3000;
 const {Sequelize, DataTypes} = require("sequelize");
 const { ConstantColorFactor } = require("three");
 app.use(cors());
-app.use(express.json());
+app.use(express.json());  
+
+
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "https://webprogrammingfinalprojectbeta.onrender.com/",
+  })
+);
+
 
 const sequelize = new Sequelize(process.env.DB_URL, {
     dialect: "postgres",
@@ -73,7 +82,6 @@ app.post("/verifyUser", async(req, res) => {
     const allUsers = await students.findAll({
       where : {name : "ed" }
     });
-    
     console.log("**user sent username", userInput.username)
     console.log("**user sent password", userInput.password)
     console.log("***allusersname", JSON.stringify(allUsers[0].name))
@@ -96,7 +104,6 @@ app.post("/verifyUser", async(req, res) => {
   }
   
 });
-  
 
 // const pool = new Pool({
 //     user : 'e',
